@@ -1,0 +1,12 @@
+{
+  "[cpp]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.tabSize": 4,
+    "files.encoding": "utf8bom"
+  },
+  "cmake.configureOnOpen": true,
+  "files.associations": {
+    "cstdlib": "cpp"
+  },
+}
