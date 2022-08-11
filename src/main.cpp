@@ -210,6 +210,9 @@ int main() {
     // 背景色を指定する
     glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
+    // ビューポートを設定する
+    glViewport(100, 50, 300, 300);
+
     // プログラムオブジェクトを作成する
     const GLuint program(loadProgram("src/point.vert", "src/point.frag"));
 
