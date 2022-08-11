@@ -80,6 +80,7 @@ GLuint createProgram(const char *vsrc, const char *fsrc) {
         // フラグメントシェーダのシェーダオブジェクトを作成する
         const GLuint fobj(glCreateShader(GL_FRAGMENT_SHADER));
         glShaderSource(fobj, 1, &fsrc, NULL);
+        glCompileShader(fobj);
 
         // フラグメントシェーダのシェーダオブジェクトをプログラムに組み込む
         if (printShaderInfoLog(fobj, "fragment shader"))
@@ -90,6 +91,7 @@ GLuint createProgram(const char *vsrc, const char *fsrc) {
     // プログラムオブジェクトをリンクする
     glBindAttribLocation(program, 0, "position");
     glBindFragDataLocation(program, 0, "fragment");
+    glLinkProgram(program);
 
     // 作成したプログラムオブジェクトを返す
     if (printProgramInfoLog(program))
