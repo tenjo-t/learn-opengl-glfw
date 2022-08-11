@@ -8,12 +8,15 @@ class Window {
     // ウィンドウのハンドル
     GLFWwindow *const window;
 
-    // 縦横比
-    GLfloat aspect;
+    // ウィンドウのサイズ
+    GLfloat size[2];
+
+    // ワールド座標系に対するデバイス座標系の拡大率
+    GLfloat scale;
 
   public:
     Window(int width = 640, int height = 480, const char *title = "Hello!")
-        : window(glfwCreateWindow(width, height, title, NULL, NULL)) {
+        : window(glfwCreateWindow(width, height, title, NULL, NULL)), scale(100.0f) {
         if (window == NULL) {
             // ウィンドウが作成できなかった
             std::cerr << "Can't create GLFW window." << std::endl;
@@ -74,11 +77,15 @@ class Window {
         Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
         if (instance != NULL) {
-            // このインスタンスが保持する縦横比を更新する
-            instance->aspect = static_cast<GLfloat>(width) / static_cast<GLfloat>(height);
+            // 開いたウィンドウのサイズを保存する
+            instance->size[0] = static_cast<GLfloat>(width);
+            instance->size[1] = static_cast<GLfloat>(height);
         }
     }
 
-    // 縦横比を取り出す
-    GLfloat getAspect() const { return aspect; }
+    // ウィンドウのサイズを取り出す
+    const GLfloat *getSize() const { return size; }
+
+    // ワールド座標系に対するデバイス座標系の拡大率を取り出す
+    GLfloat getScale() const { return scale; }
 };
