@@ -3,6 +3,7 @@
 // #pragma comment(lib, "libglew32d.lib")
 // #define GLEW_STATIC
 #include "Shape.h"
+#include "Window.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <cstdlib>
@@ -162,9 +163,9 @@ GLuint loadProgram(const char *vert, const char *frag) {
 // 矩形の頂点いの位置
 constexpr Object::Vertex rectangleVertex[] = {
     {-0.5f, -0.5f},
-    {1.5f, -0.5f},
-    {1.5f, 1.5f},
-    {-0.5f, 1.5f},
+    {0.5f, -0.5f},
+    {0.5f, 0.5f},
+    {-0.5f, 0.5f},
 };
 
 int main() {
@@ -185,33 +186,10 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // ウィンドウを作成する
-    GLFWwindow *const window(glfwCreateWindow(640, 480, "Hello!", NULL, NULL));
-    if (window == NULL) {
-        // ウィンドウが作成できなかった
-        std::cerr << "Can't create GLFW window." << std::endl;
-        glfwTerminate();
-        return 1;
-    }
-
-    // 作成したウィンドウを OpenGL の処理対象にする
-    glfwMakeContextCurrent(window);
-
-    // GLEW を初期化する
-    glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK) {
-        // GLEW の初期化に失敗した
-        std::cerr << "Can't initialize GLEW" << std::endl;
-        return 1;
-    }
-
-    // 垂直同期のタイミングを待つ
-    glfwSwapInterval(1);
+    Window window;
 
     // 背景色を指定する
     glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-
-    // ビューポートを設定する
-    glViewport(100, 50, 300, 300);
 
     // プログラムオブジェクトを作成する
     const GLuint program(loadProgram("src/point.vert", "src/point.frag"));
@@ -220,7 +198,7 @@ int main() {
     std::unique_ptr<const Shape> shape(new Shape(2, 4, rectangleVertex));
 
     // ウィンドウが開いている間繰り返す
-    while (glfwWindowShouldClose(window) == GL_FALSE) {
+    while (window) {
         // ウィンドウを消去する
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -231,9 +209,6 @@ int main() {
         shape->draw();
 
         // カラーバッファを入れ替える
-        glfwSwapBuffers(window);
-
-        // イベントを取り出す
-        glfwWaitEvents();
+        window.swapBuffers();
     }
 }
