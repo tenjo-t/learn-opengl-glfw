@@ -86,10 +86,32 @@ int main() {
     // 背景色を指定する
     glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
+    // バーテックスシェーダのソースプログラム
+    static constexpr GLchar vsrc[] = "#version 150 core\n"
+                                     "in vec4 position;\n"
+                                     "void main()\n"
+                                     "{\n"
+                                     "  gl_Position = position;\n"
+                                     "}\n";
+
+    // フラグメントシェーダのソースプログラム
+    static constexpr GLchar fsrc[] = "#version 150 core\n"
+                                     "out vec4 fragment;\n"
+                                     "void main()\n"
+                                     "{\n"
+                                     "  fragment = vec4(1.0, 0.0, 0.0, 1.0);\n"
+                                     "}\n";
+
+    // プログラムオブジェクトを作成する
+    const GLuint program(createProgram(vsrc, fsrc));
+
     // ウィンドウが開いている間繰り返す
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         // ウィンドウを消去する
         glClear(GL_COLOR_BUFFER_BIT);
+
+        // シェーダプログラムの使用開始
+        glUseProgram(program);
 
         // カラーバッファを入れ替える
         glfwSwapBuffers(window);
