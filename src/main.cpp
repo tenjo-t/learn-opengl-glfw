@@ -162,9 +162,9 @@ GLuint loadProgram(const char *vert, const char *frag) {
 // 矩形の頂点いの位置
 constexpr Object::Vertex rectangleVertex[] = {
     {-0.5f, -0.5f},
-    {0.5f, -0.5f},
-    {0.5f, 0.5f},
-    {-0.5f, 0.5f},
+    {1.5f, -0.5f},
+    {1.5f, 1.5f},
+    {-0.5f, 1.5f},
 };
 
 int main() {
