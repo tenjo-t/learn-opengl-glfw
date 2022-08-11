@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <GL/glew.h>
 
 // 図形データ
@@ -20,7 +20,7 @@ class Object {
     //   size: 頂点の位置の次元
     //   vertexcount: 頂点の数
     //   vertex: 頂点属性を格納した配列
-    Object(GLint size, GLsizei, vertexcount, const Vertex *vertex) {
+    Object(GLint size, GLsizei vertexcount, const Vertex *vertex) {
         // 頂点配列オブジェクト
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
@@ -57,4 +57,4 @@ class Object {
         // 描画する頂点配列オブジェクトを指定する
         glBindVertexArray(vao);
     }
-}
+};
