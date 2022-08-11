@@ -8,6 +8,9 @@ class Window {
     // ウィンドウのハンドル
     GLFWwindow *const window;
 
+    // 縦横比
+    GLfloat aspect;
+
   public:
     Window(int width = 640, int height = 480, const char *title = "Hello!")
         : window(glfwCreateWindow(width, height, title, NULL, NULL)) {
@@ -30,6 +33,9 @@ class Window {
 
         // 垂直同期のタイミングを待つ
         glfwSwapInterval(1);
+
+        // このインスタンスのthisポインタを記録しておく
+        glfwSetWindowUserPointer(window, this);
 
         // ウィンドウのサイズ変更時に呼び出す処理の登録
         glfwSetWindowSizeCallback(window, resize);
@@ -63,5 +69,16 @@ class Window {
 
         // フレームバッファ全体をビューポートに設定する
         glViewport(0, 0, fbWidth, fbHeight);
+
+        // このインスタンスのthisポインタを得る
+        Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
+
+        if (instance != NULL) {
+            // このインスタンスが保持する縦横比を更新する
+            instance->aspect = static_cast<GLfloat>(width) / static_cast<GLfloat>(height);
+        }
     }
+
+    // 縦横比を取り出す
+    GLfloat getAspect() const { return aspect; }
 };
